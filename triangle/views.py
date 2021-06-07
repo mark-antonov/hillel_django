@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .forms import TriangleForm
 
 
+# Hometask 6. Django: Hypotenuse calculator
 def triangle(request):
     if request.method == "POST":
         triangle_form = TriangleForm(request.POST)
