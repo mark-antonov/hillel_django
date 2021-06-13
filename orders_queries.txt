@@ -1,0 +1,280 @@
+# Instance of Client
+
+# Get the third client from Client
+In [1]: person = Client.objects.get(pk=3)
+SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ WHERE "orders_client"."id" = 3
+ LIMIT 21
+
+Execution time: 0.000730s [Database: default]
+
+# Get city of the client
+In [2]: person.city
+SELECT "orders_city"."id",
+       "orders_city"."name"
+  FROM "orders_city"
+ WHERE "orders_city"."id" = 1
+ LIMIT 21
+
+Execution time: 0.000510s [Database: default]
+Out[2]: <City: Kharkov>
+
+# Get all products of the client
+In [3]: person.product.all()
+Out[3]: SELECT "orders_product"."id",
+       "orders_product"."name",
+       "orders_product"."price",
+       "orders_product"."date_created"
+  FROM "orders_product"
+ INNER JOIN "orders_client_product"
+    ON ("orders_product"."id" = "orders_client_product"."product_id")
+ WHERE "orders_client_product"."client_id" = 3
+ LIMIT 21
+
+Execution time: 0.001019s [Database: default]
+<QuerySet [<Product: Candy>]>
+
+# Get the supplier from city of the client
+In [4]: person.city.supplier
+SELECT "orders_supplier"."id",
+       "orders_supplier"."first_name",
+       "orders_supplier"."last_name",
+       "orders_supplier"."city_id"
+  FROM "orders_supplier"
+ WHERE "orders_supplier"."city_id" = 1
+ LIMIT 21
+
+Execution time: 0.000535s [Database: default]
+Out[4]: <Supplier: Andrey, Shevchenko>
+
+------------------------------------------------------------------
+
+# Instance of Product
+
+# Get the first product from Product
+In [6]: product = Product.objects.first()
+SELECT "orders_product"."id",
+       "orders_product"."name",
+       "orders_product"."price",
+       "orders_product"."date_created"
+  FROM "orders_product"
+ ORDER BY "orders_product"."id" ASC
+ LIMIT 1
+
+Execution time: 0.000336s [Database: default]
+
+# Get set of client of the product
+In [8]: product.client_set.all()
+Out[8]: SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ INNER JOIN "orders_client_product"
+    ON ("orders_client"."id" = "orders_client_product"."client_id")
+ WHERE "orders_client_product"."product_id" = 1
+ LIMIT 21
+
+Execution time: 0.000232s [Database: default]
+<QuerySet [<Client: Dmitriy, Gordon>, <Client: Mark, Antonov>]>
+
+# Get the city of the first client from set of clients of the product
+In [12]: product.client_set.all()[0].city
+SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ INNER JOIN "orders_client_product"
+    ON ("orders_client"."id" = "orders_client_product"."client_id")
+ WHERE "orders_client_product"."product_id" = 1
+ LIMIT 1
+
+Execution time: 0.000216s [Database: default]
+SELECT "orders_city"."id",
+       "orders_city"."name"
+  FROM "orders_city"
+ WHERE "orders_city"."id" = 1
+ LIMIT 21
+
+Execution time: 0.000111s [Database: default]
+Out[12]: <City: Kharkov>
+
+# Get the supplier from the city of the client
+In [13]: product.client_set.all()[0].city.supplier
+SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ INNER JOIN "orders_client_product"
+    ON ("orders_client"."id" = "orders_client_product"."client_id")
+ WHERE "orders_client_product"."product_id" = 1
+ LIMIT 1
+
+Execution time: 0.000501s [Database: default]
+SELECT "orders_city"."id",
+       "orders_city"."name"
+  FROM "orders_city"
+ WHERE "orders_city"."id" = 1
+ LIMIT 21
+
+Execution time: 0.000093s [Database: default]
+SELECT "orders_supplier"."id",
+       "orders_supplier"."first_name",
+       "orders_supplier"."last_name",
+       "orders_supplier"."city_id"
+  FROM "orders_supplier"
+ WHERE "orders_supplier"."city_id" = 1
+ LIMIT 21
+
+Execution time: 0.000109s [Database: default]
+Out[13]: <Supplier: Andrey, Shevchenko>
+
+-----------------------------------------------------------------------
+
+# Instance of City
+
+# Get the first city from City
+In [14]: city = City.objects.first()
+SELECT "orders_city"."id",
+       "orders_city"."name"
+  FROM "orders_city"
+ ORDER BY "orders_city"."id" ASC
+ LIMIT 1
+
+Execution time: 0.001071s [Database: default]
+
+# Get the supplier from the city
+In [15]: city.supplier
+SELECT "orders_supplier"."id",
+       "orders_supplier"."first_name",
+       "orders_supplier"."last_name",
+       "orders_supplier"."city_id"
+  FROM "orders_supplier"
+ WHERE "orders_supplier"."city_id" = 1
+ LIMIT 21
+
+Execution time: 0.000121s [Database: default]
+Out[15]: <Supplier: Andrey, Shevchenko>
+
+# Get the clients from the city
+In [16]: city.client_set.all()
+Out[16]: SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ WHERE "orders_client"."city_id" = 1
+ LIMIT 21
+
+Execution time: 0.000185s [Database: default]
+<QuerySet [<Client: Dmitriy, Gordon>, <Client: Mark, Antonov>]>
+
+# Get the products of the client from the city
+In [21]: city.client_set.all()[0].product.all()
+SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ WHERE "orders_client"."city_id" = 1
+ LIMIT 1
+
+Execution time: 0.000266s [Database: default]
+Out[21]: SELECT "orders_product"."id",
+       "orders_product"."name",
+       "orders_product"."price",
+       "orders_product"."date_created"
+  FROM "orders_product"
+ INNER JOIN "orders_client_product"
+    ON ("orders_product"."id" = "orders_client_product"."product_id")
+ WHERE "orders_client_product"."client_id" = 1
+ LIMIT 21
+
+Execution time: 0.000170s [Database: default]
+<QuerySet [<Product: Candy>]>
+
+---------------------------------------------------------------------------
+
+# Instance of Supplier
+
+# Get the first supplier from Supplier
+In [22]: supplier = Supplier.objects.first()
+SELECT "orders_supplier"."id",
+       "orders_supplier"."first_name",
+       "orders_supplier"."last_name",
+       "orders_supplier"."city_id"
+  FROM "orders_supplier"
+ ORDER BY "orders_supplier"."id" ASC
+ LIMIT 1
+
+Execution time: 0.000180s [Database: default]
+
+# Get the city of the supplier
+In [23]: supplier.city
+SELECT "orders_city"."id",
+       "orders_city"."name"
+  FROM "orders_city"
+ WHERE "orders_city"."id" = 1
+ LIMIT 21
+
+Execution time: 0.000288s [Database: default]
+Out[23]: <City: Kharkov>
+
+# Get the clients from the city of the supplier
+In [24]: supplier.city.client_set.all()
+Out[24]: SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ WHERE "orders_client"."city_id" = 1
+ LIMIT 21
+
+Execution time: 0.000123s [Database: default]
+<QuerySet [<Client: Dmitriy, Gordon>, <Client: Mark, Antonov>]>
+
+# Get the products of the first client from the city of the supplier
+In [26]: supplier.city.client_set.all()[0].product.all()
+SELECT "orders_client"."id",
+       "orders_client"."first_name",
+       "orders_client"."last_name",
+       "orders_client"."email",
+       "orders_client"."age",
+       "orders_client"."city_id"
+  FROM "orders_client"
+ WHERE "orders_client"."city_id" = 1
+ LIMIT 1
+
+Execution time: 0.000289s [Database: default]
+Out[26]: SELECT "orders_product"."id",
+       "orders_product"."name",
+       "orders_product"."price",
+       "orders_product"."date_created"
+  FROM "orders_product"
+ INNER JOIN "orders_client_product"
+    ON ("orders_product"."id" = "orders_client_product"."product_id")
+ WHERE "orders_client_product"."client_id" = 1
+ LIMIT 21
+
+Execution time: 0.000181s [Database: default]
+<QuerySet [<Product: Candy>]>

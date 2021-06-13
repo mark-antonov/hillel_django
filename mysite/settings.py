@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # HT 6. Django forms 'triangle'
     'triangle.apps.TriangleConfig',
+    # HT 8. OneToOneField, ForeignKey, ManyToManyField
+    'orders.apps.OrdersConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +130,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# HT 8. OneToOneField, ForeignKey, ManyToManyField
+GRAPH_MODELS = {
+    'all_applications': False,
+    'group_models': True,
+    'app_labels': ['orders'],
+}
+
+# Always use IPython for shell_plus
+SHELL_PLUS = "ipython"
+SHELL_PLUS_PRINT_SQL = True
