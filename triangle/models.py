@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 
-# Home task 9. Model Person
+# Home task 7. Model Person
 class Person(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
