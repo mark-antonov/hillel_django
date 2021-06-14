@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'orders.middleware.LogMiddleware',  # HT 9. Middleware for logging requests.
 ]
 
 ROOT_URLCONF = 'mysite.urls'

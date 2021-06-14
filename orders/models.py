@@ -37,3 +37,13 @@ class Supplier(models.Model):
 
     def __str__(self):
         return f'{self.first_name}, {self.last_name}'
+
+
+# HT 9. Middleware, ModelAdmin
+class Logs(models.Model):
+    path = models.CharField(max_length=100)
+    method = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.path}, {self.method}'
