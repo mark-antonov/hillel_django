@@ -1,4 +1,4 @@
-<h1> Hometasks for Hillel. </h1>
+# Hometasks for Hillel.
 
 <strong>Hometask 5. queryset filter, management commands:</strong><br>
 
@@ -17,7 +17,7 @@ python manage.py create_users <number_of_users>
 Можете использовать 1 или 2 темплейта при необходимости для рендера формы и результата.
 Если один темплейт - значение гипотенузы по умолчанию None - проверяйте его в темплейте, и на основании того None или "значение" рендерите форму или значение гипотенузы.
 
-<strong>Homework 7. Django model form:</strong><br>
+<strong>Hometask 7. Django model form:</strong><br>
 
 Создать новую модель с несколькими полями. Создать миграцию и мигрировать.<br>
 
@@ -53,6 +53,6 @@ URLS:<br>
 
 
 <strong>Hometask 9. Middleware for logging requests, ModelAdmin:</strong><br>
-Добавить модель для логов. В ней должны быть поля - path (путь), method (GET, POST etc), timestamp.
+Добавить модель для логов. В ней должны быть поля - `path (путь), method (GET, POST etc), timestamp`.
 Добавить мидлвар LogMiddleware который будет обрабатывать каждый реквест (кроме реквестов в админку) и сохранять соответствующие значения в базу.<br>
 Добавить ModelAdmin для этой модели что бы вывести соответствующие данные в админке.
