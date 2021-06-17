@@ -26,8 +26,15 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", 'django-insecure-dsb6&7bymu##b(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    '127.0.0.1',
+]
 
+# HT 10. django-debug-toolbar, django silk
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -46,6 +53,13 @@ INSTALLED_APPS = [
     'django_extensions',
 ]
 
+# HT 10. django-debug-toolbar, django silk
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',  # Debug Toolbar
+        'silk',  # This object was created for silk
+    ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,6 +70,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'orders.middleware.LogMiddleware',  # HT 9. Middleware for logging requests.
 ]
+
+# HT 10. django-debug-toolbar, django silk
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',  # Middleware for Debug Toolbar
+        'silk.middleware.SilkyMiddleware',  # Middleware for profiling and inspection tool.
+    ]
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -142,3 +163,9 @@ GRAPH_MODELS = {
 # Always use IPython for shell_plus
 SHELL_PLUS = "ipython"
 SHELL_PLUS_PRINT_SQL = True
+
+# HT 10. django-debug-toolbar, django silk
+SILKY_PYTHON_PROFILER = True
+SILKY_AUTHENTICATION = True  # User must login
+SILKY_AUTHORISATION = True  # User must have permissions
+SILKY_PERMISSIONS = lambda user: user.is_superuser  # noqa: E731
