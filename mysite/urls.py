@@ -17,15 +17,15 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
-from triangle import views
+from orders import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Home task 6. Django: Hypotenuse calculator
-    path('triangle/', include('triangle.urls')),
     # Home task 7. ModelForm for Person
-    path('person/', views.create_person, name='person'),
-    path('person/<int:pk>/', views.update_person, name='update-person'),
+    path('triangle/', include('triangle.urls')),
+    # HT 12. Celery
+    path('reminder/', views.reminder, name='reminder'),
 ]
 
 # HT 10. django-debug-toolbar, django silk

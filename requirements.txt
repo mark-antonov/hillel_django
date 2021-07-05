@@ -11,3 +11,5 @@ pydot==1.4.2
 pyparsing==2.4.7
 django-debug-toolbar==3.2.1
 django-silk==4.1.0
+celery==5.1.2
+django-celery-results==2.2.0

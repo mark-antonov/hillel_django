@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     # HT 8. OneToOneField, ForeignKey, ManyToManyField
     'orders.apps.OrdersConfig',
     'django_extensions',
+    # HT 12. Celery
+    'django_celery_results',
 ]
 
 # HT 10. django-debug-toolbar, django silk
@@ -169,3 +171,20 @@ SILKY_PYTHON_PROFILER = True
 SILKY_AUTHENTICATION = True  # User must login
 SILKY_AUTHORISATION = True  # User must have permissions
 SILKY_PERMISSIONS = lambda user: user.is_superuser  # noqa: E731
+
+# HT 12. Celery - Settings
+# Celery Configuration Options
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = 'amqp://localhost:5672'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+# Add to test email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
