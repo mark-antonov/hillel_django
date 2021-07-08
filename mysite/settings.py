@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'django_extensions',
     # HT 12. Celery
     'django_celery_results',
+    # HT 13. Celery beat
+    'scraping'
 ]
 
 # HT 10. django-debug-toolbar, django silk
